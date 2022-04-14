@@ -1,0 +1,88 @@
+{
+  "imagesWindow" : [
+    {
+      "id" : 1,
+      "urlImage" : "images/1.jpg",
+      "title" : "Опора №1п",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    },
+    {
+      "id" : 2,
+      "urlImage" : "images/2.jpg",
+      "title" : "Опора №2п",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    },
+    {
+      "id" : 3,
+      "urlImage" : "images/3.jpg",
+      "title" : "Опора №3п",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    },
+    {
+      "id" : 4,
+      "urlImage" : "images/4.jpg",
+      "title" : "Опора №4п",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    },
+    {
+      "id" : 5,
+      "urlImage" : "images/5.jpg",
+      "title" : "Опора №5п",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    },
+    {
+      "id" : 6,
+      "urlImage" : "images/6.jpg",
+      "title" : "Опора №1л",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    },
+    {
+      "id" : 7,
+      "urlImage" : "images/7.jpg",
+      "title" : "Опора №2л",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    },
+    {
+      "id" : 8,
+      "urlImage" : "images/8.jpg",
+      "title" : "Опора №3л",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    },
+    {
+      "id" : 9,
+      "urlImage" : "images/9.jpg",
+      "title" : "Опора №4л",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    },
+    {
+      "id" : 10,
+      "urlImage" : "images/10.jpg",
+      "title" : "Опора №5л",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    },
+    {
+      "id" : 11,
+      "urlImage" : "images/11.jpg",
+      "title" : "Опора №6л",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    },
+    {
+      "id" : 12,
+      "urlImage" : "images/12.jpg",
+      "title" : "Опора №7л",
+      "date" : "12.02.2022",
+      "urlArchive" : "#archive-window"
+    }
+  ]
+}
