@@ -123,9 +123,7 @@ main {
 
 .image-window {
   position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   height: 100%;
   width: 100%;
   -webkit-box-orient: vertical;
@@ -139,7 +137,9 @@ main {
       -ms-flex-pack: center;
           justify-content: center;
   margin: 0 auto;
-  background-color: #444444;
+  background: rgba(68, 68, 68, 0.8);
+  -webkit-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
   z-index: 1000;
   top: 0px;
   left: 0px;
@@ -204,11 +204,16 @@ main {
   border-radius: 50px;
 }
 
-.report-window {
-  position: absolute;
+.image-window:target {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  pointer-events: auto;
+}
+
+.report-window {
+  position: absolute;
+  display: none;
   height: 100%;
   width: 100%;
   -webkit-box-orient: vertical;
@@ -222,7 +227,9 @@ main {
       -ms-flex-pack: center;
           justify-content: center;
   margin: 0 auto;
-  background-color: #444444;
+  background: rgba(68, 68, 68, 0.8);
+  -webkit-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
   z-index: 1000;
   top: 0px;
   left: 0px;
@@ -265,6 +272,7 @@ main {
 }
 
 .report-window__panel {
+  position: relative;
   width: 1000px;
   height: 650px;
   background-color: white;
@@ -274,5 +282,12 @@ main {
 
 .report-window__title {
   font-weight: bold;
+}
+
+.report-window:target {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  pointer-events: auto;
 }
 /*# sourceMappingURL=style.css.map */
