@@ -20,6 +20,15 @@ request.onload = () => {
     console.log(obj);
 }
 
+let requestTable = new XMLHttpRequest();
+request.open('GET', `https://jsore-games.ru/table.json`);
+request.responseType = 'json';
+request.send();
+request.onload = () => {
+    const obj = request.response;
+    //Продолжить заполнение таблицы
+}
+
 pointArray.forEach((element, index) => {
     element.addEventListener("mouseenter", () => {
         obj.imagesWindow.forEach((el) => {
