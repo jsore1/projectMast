@@ -76,3 +76,62 @@ main
     &__point:nth-child(12)
         top: 780px
         right: 600px
+
+.image-window
+    position: absolute
+    display: flex
+    height: 100%
+    width: 100%
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    margin: 0 auto
+    background-color: #444444
+    z-index: 1000
+    top: 0px
+    left: 0px
+    right: 0px
+    bottom: 0px
+    &__panel
+        width: 588px
+        height: 120px
+        background-color: white
+        border-radius: 50px
+        text-align: center
+    &__title
+        font-weight: bold
+    &__archive
+        a
+            font-weight: bold
+            color: black
+    img
+        width: 588px
+        height: 785px
+        border-radius: 50px
+.close-btn
+    position: absolute
+    display: block
+    top: 11px
+    right: 620px
+    width: 40px
+    height: 40px
+    background-color: #7a7a7a
+    border-radius: 50%
+    color: white
+    text-align: center
+    vertical-align: middle
+
+.close-btn:before, .close-btn:after
+    position: absolute
+    left: 19px
+    top: 3px
+    content: ' '
+    height: 33px
+    width: 2px
+    background-color: #bdbcbc
+
+.close-btn:before
+    transform: rotate(45deg)
+
+.close-btn:after
+    transform: rotate(-45deg)
