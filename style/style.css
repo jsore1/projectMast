@@ -187,9 +187,9 @@ main {
 .close-btn:before, .close-btn:after {
   position: absolute;
   left: 19px;
-  top: 3px;
+  top: 8px;
   content: ' ';
-  height: 33px;
+  height: 23px;
   width: 2px;
   background-color: #bdbcbc;
 }
