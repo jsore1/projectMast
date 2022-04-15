@@ -17,7 +17,6 @@ request.responseType = 'json';
 request.send();
 request.onload = () => {
     obj = request.response;
-    console.log(obj);
 }
 
 let requestTable = new XMLHttpRequest();
@@ -44,6 +43,5 @@ pointArray.forEach((element, index) => {
 window.addEventListener("resize", () => {
     pointArray.forEach((element, index) => {
         element.style.right = rightArray[index] + (document.documentElement.clientWidth - clientWidth)/4 + "px";
-        console.log(element.style.right);
     });
 });
