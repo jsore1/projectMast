@@ -282,6 +282,12 @@ main {
 
 .report-window__title {
   font-weight: bold;
+  font-size: 18px;
+}
+
+.report-window__text {
+  font-size: 18px;
+  padding: 0 20px;
 }
 
 .report-window:target {
