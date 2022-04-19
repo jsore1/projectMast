@@ -34,6 +34,10 @@ main {
   padding: 10px;
 }
 
+.plan {
+  position: relative;
+}
+
 .plan a {
   text-decoration: none;
   color: black;
