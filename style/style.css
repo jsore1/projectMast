@@ -34,6 +34,17 @@ main {
   padding: 10px;
 }
 
+.plan a {
+  text-decoration: none;
+  color: black;
+}
+
+.plan span {
+  font-weight: bold;
+  display: block;
+  padding-top: 3px;
+}
+
 .plan img {
   border-radius: 50px;
   width: 784px;
@@ -43,80 +54,70 @@ main {
 .plan__point {
   position: absolute;
   background-color: white;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   text-align: center;
   border-radius: 50%;
   border: 1px solid black;
+  font-size: 12px;
 }
 
-.plan__point a {
-  text-decoration: none;
-  color: black;
-}
-
-.plan__point span {
-  font-weight: bold;
-  display: block;
-  padding-top: 3px;
-}
-
-.plan__point:nth-child(1) {
+#point_1 {
   top: 320px;
   right: 335px;
 }
 
-.plan__point:nth-child(2) {
+#point_2 {
   top: 240px;
   right: 407px;
 }
 
-.plan__point:nth-child(3) {
+#point_3 {
   top: 172px;
   right: 468px;
 }
 
-.plan__point:nth-child(4) {
+#point_4 {
   top: 85px;
   right: 545px;
 }
 
-.plan__point:nth-child(5) {
+#point_5 {
   top: 58px;
   right: 583px;
 }
 
-.plan__point:nth-child(6) {
+#point_6 {
   top: 443px;
   right: 277px;
 }
 
-.plan__point:nth-child(7) {
+#point_7 {
   top: 478px;
   right: 310px;
 }
 
-.plan__point:nth-child(8) {
+#point_8 {
   top: 523px;
   right: 355px;
 }
 
-.plan__point:nth-child(9) {
+#point_9 {
   top: 565px;
   right: 398px;
 }
 
-.plan__point:nth-child(10) {
+#point_10 {
   top: 640px;
   right: 480px;
 }
 
-.plan__point:nth-child(11) {
+#point_11 {
   top: 720px;
   right: 545px;
 }
 
-.plan__point:nth-child(12) {
+#point_12 {
   top: 780px;
   right: 600px;
 }
