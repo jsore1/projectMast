@@ -1,9 +1,6 @@
-const clientWidth = 1903;
-const clientHeight = 557;
-const rightArray = [335, 407, 468, 545, 583, 277, 310, 355, 398, 480, 545, 600];
-let editPlan = false;
+let isAddPoint = false;
+let isUpdatePoint = false;
 
-const pointArray = document.querySelectorAll(".plan__point");
 const imageWindowImg = document.querySelector(".image-window").children[0];
 const imageWindowTitle = document.querySelector(".image-window__title");
 const imageWindowDate = document.querySelector(".image-window__date");
@@ -21,16 +18,44 @@ requestSelect.onload = () => {
         array.forEach((el) => {
             plan.insertAdjacentHTML("afterbegin",`<a href="#image-window"><div class="plan__point" style="top: ${el.y}px;left: ${el.x}px"><span>${el.name}</span></div></a>`);
         });
+        const pointArray = document.querySelectorAll(".plan__point");
+        pointArray.forEach((element, index) => {
+            element.addEventListener("mouseenter", () => {
+                array.forEach((el) => {
+                    if ((el.id - 1) === index) {
+                        imageWindowImg.src = el.url;
+                        imageWindowTitle.innerText = el.title;
+                        imageWindowDate.innerText = el.date;
+                    }
+                });
+            });
+            element.addEventListener("click", (event) => {
+                if (isUpdatePoint) {
+                    event.preventDefault();
+                    if (confirm("Обновить точку?")) {
+                        const pointDate = prompt("Введите дату фото","дата в формате YYYY-MM-DD");
+                        const pointImgUrl = prompt("Введите путь к фото","images/.jpg");
+                        if (pointDate === null || pointImgUrl === null) {
+                            return;
+                        }
+                        // Продолжить код с обновлением точки
+                    }
+                }
+            });
+        });
     }
 }
 
 
 plan.addEventListener("click", (event) => {
-    if (editPlan) {
+    if (isAddPoint) {
         if (confirm("Добавить новую точку на план?")) {
             const top = event.offsetY - 10, left = event.offsetX - 10;
             const pointName = prompt("Введите имя для точки", "имя точки");
-            if (pointName === null) {
+            const pointTitle = prompt("Введите название для фото", "название фото");
+            const pointDate = prompt("Введите дату фото","дата в формате YYYY-MM-DD");
+            const pointImgUrl = prompt("Введите путь к фото","images/.jpg");
+            if (pointName === null || pointTitle === null || pointDate === null || pointImgUrl === null) {
                 return;
             }
             let request = new XMLHttpRequest();
@@ -39,6 +64,9 @@ plan.addEventListener("click", (event) => {
             formData.append("x", left);
             formData.append("y", top);
             formData.append("name", pointName);
+            formData.append("title", pointTitle);
+            formData.append("date", pointDate);
+            formData.append("url", pointImgUrl);
             request.send(formData);
             request.onload = () => {
                 if (request.response === "1") {
@@ -50,17 +78,17 @@ plan.addEventListener("click", (event) => {
     }
 });
 
-const requestUrl = `https://jsore-games.ru/imagesWindow.json`;
+//const requestUrl = `https://jsore-games.ru/imagesWindow.json`;
 
-let obj;
+//let obj;
 
-let request = new XMLHttpRequest();
-request.open('GET', requestUrl);
-request.responseType = 'json';
-request.send();
-request.onload = () => {
-    obj = request.response;
-}
+//let request = new XMLHttpRequest();
+//request.open('GET', requestUrl);
+//request.responseType = 'json';
+//request.send();
+//request.onload = () => {
+    //obj = request.response;
+//}
 
 let requestTable = new XMLHttpRequest();
 requestTable.open('GET', `https://jsore-games.ru/table.json`);
@@ -88,24 +116,10 @@ requestTable.onload = () => {
     });
 }
 
-pointArray.forEach((element, index) => {
-    element.addEventListener("mouseenter", () => {
-        obj.imagesWindow.forEach((el) => {
-            if (el.id === index) {
-                imageWindowImg.src = el.urlImage;
-                imageWindowTitle.innerText = el.title;
-                imageWindowDate.innerText = el.date;
-            }
-        });
-    });
-});
+function addPointToggle() {
+    isAddPoint = (isAddPoint) ? false : true;
+}
 
-//window.addEventListener("resize", () => {
-    //pointArray.forEach((element, index) => {
-        //element.style.right = rightArray[index] + (document.documentElement.clientWidth - clientWidth)/4 + "px";
-    //});
-//});
-
-function editPlanToggle() {
-    editPlan = (editPlan) ? false : true;
+function updatePointToggle() {
+    isUpdatePoint = (isUpdatePoint) ? false : true;
 }
