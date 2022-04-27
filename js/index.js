@@ -9,14 +9,14 @@ const reportWindowPanel = document.querySelector(".report-window__panel").childr
 const plan = document.querySelector(".plan");
 
 let requestSelect = new XMLHttpRequest();
-requestSelect.open('POST', '../select_points.php');
+requestSelect.open('POST', 'select_points.php');
 requestSelect.responseType = 'json';
 requestSelect.send();
 requestSelect.onload = () => {
     const array = requestSelect.response;
     if (array.length > 0) {
         array.forEach((el) => {
-            plan.insertAdjacentHTML("afterbegin",`<a href="#image-window"><div class="plan__point" style="top: ${el.y}px;left: ${el.x}px"><span>${el.name}</span></div></a>`);
+            plan.insertAdjacentHTML("beforeend",`<a href="#image-window"><div class="plan__point" style="top: ${el.y}px;left: ${el.x}px"><span>${el.name}</span></div></a>`);
         });
         const pointArray = document.querySelectorAll(".plan__point");
         pointArray.forEach((element, index) => {
@@ -33,12 +33,24 @@ requestSelect.onload = () => {
                 if (isUpdatePoint) {
                     event.preventDefault();
                     if (confirm("Обновить точку?")) {
-                        const pointDate = prompt("Введите дату фото","дата в формате YYYY-MM-DD");
+                        const pointDate = prompt("Введите дату фото","Последняя дата съемки: dd.mm.yyyy");
                         const pointImgUrl = prompt("Введите путь к фото","images/.jpg");
                         if (pointDate === null || pointImgUrl === null) {
                             return;
                         }
                         // Продолжить код с обновлением точки
+                        let request = new XMLHttpRequest();
+                        request.open('POST', 'update_point.php');
+                        let formData = new FormData();
+                        formData.append("id", index + 1);
+                        formData.append("date", pointDate);
+                        formData.append("url", pointImgUrl);
+                        request.send(formData);
+                        request.onload = () => {
+                            if (request.response === "1") {
+                                console.log("Точка обновлена!");
+                            }
+                        }
                     }
                 }
             });
@@ -53,13 +65,13 @@ plan.addEventListener("click", (event) => {
             const top = event.offsetY - 10, left = event.offsetX - 10;
             const pointName = prompt("Введите имя для точки", "имя точки");
             const pointTitle = prompt("Введите название для фото", "название фото");
-            const pointDate = prompt("Введите дату фото","дата в формате YYYY-MM-DD");
+            const pointDate = prompt("Введите дату фото","Последняя дата съемки: dd.mm.yyyy");
             const pointImgUrl = prompt("Введите путь к фото","images/.jpg");
             if (pointName === null || pointTitle === null || pointDate === null || pointImgUrl === null) {
                 return;
             }
             let request = new XMLHttpRequest();
-            request.open('POST', '../add_point.php');
+            request.open('POST', 'add_point.php');
             let formData = new FormData();
             formData.append("x", left);
             formData.append("y", top);
@@ -71,7 +83,7 @@ plan.addEventListener("click", (event) => {
             request.onload = () => {
                 if (request.response === "1") {
                     console.log("Точка добавлена!");
-                    plan.insertAdjacentHTML("afterbegin",`<a href="#image-window"><div class="plan__point" style="top: ${top}px;left: ${left}px"><span>${pointName}</span></div></a>`);
+                    plan.insertAdjacentHTML("beforeend",`<a href="#image-window"><div class="plan__point" style="top: ${top}px;left: ${left}px"><span>${pointName}</span></div></a>`);
                 }
             }
         }
@@ -91,7 +103,7 @@ plan.addEventListener("click", (event) => {
 //}
 
 let requestTable = new XMLHttpRequest();
-requestTable.open('GET', `https://jsore-games.ru/table.json`);
+requestTable.open('GET', `table.json`);
 requestTable.responseType = 'json';
 requestTable.send();
 requestTable.onload = () => {
