@@ -8,7 +8,7 @@ if (isset($_POST['x']) && isset($_POST['y']) && isset($_POST['name']) && isset($
 	$title = $_POST['title'];
 	$date = $_POST['date'];
 	$url = $_POST['url'];
-	$sql = "INSERT INTO `point_list` (`x`, `y`, `name`, `title`, `date`, `url_images`) VALUES (:x,:y,:name,:title,:date,:url)";
+	$sql = "INSERT INTO `point_list` (`x`, `y`, `name`, `title`, `date`, `url_image`) VALUES (:x,:y,:name,:title,:date,:url)";
 	$stmt = $db->prepare($sql);
 	$stmt->execute([':x' => $x, ':y' => $y, ':name' => $name, ':title' => $title, ':date' => $date, ':url' => $url]);
 	echo 1;
