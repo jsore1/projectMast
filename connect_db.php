@@ -1,6 +1,6 @@
 <?php
-$db_name = 'u1622660_default';
-$login = 'u1622660_default';
-$pass = 'cJEMj2mXfq37IN6i';
+$db_name = 'projectmast_db';
+$login = 'root';
+$pass = 'HefylfIfh48';
 $db = new PDO('mysql:host=localhost;dbname=' . $db_name .';charset=utf8;', $login, $pass);
 ?>
