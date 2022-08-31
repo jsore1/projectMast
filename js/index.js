@@ -32,7 +32,7 @@ class Modal {
         if (this.text) {this.text.remove();}
         if (this.image) {this.image.remove();}
         if (this.date) {this.date.remove();}
-        this.image = document.createElement('div');
+        this.image = document.createElement('img');
         this.image.classList.add('modal__img');
         this.content.prepend(this.image);
         this.date = document.createElement('div');
@@ -74,7 +74,8 @@ requestSelect.onload = () => {
                 array.forEach((el) => {
                     if ((el.id - 1) === index) {
                         //modalDialog.image.src = `${el.url}`;
-                        modalDialog.image.style.background = `url(${el.url}) center center/cover no-repeat`;
+                        modalDialog.image.setAttribute("src", `${el.url}`);
+                        //modalDialog.image.style.background = `url(${el.url}) center center/cover no-repeat`;
                         console.log("text");
                         modalDialog.title.textContent = el.title;
                         modalDialog.date.textContent = el.date;
