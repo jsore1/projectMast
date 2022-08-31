@@ -68,13 +68,15 @@ main {
   font-size: 18px;
 }
 .modal__dialog {
-  max-width: 700px;
-  max-height: 850px;
-  margin: 10px auto;
+  display: flex;
+  width: 37.5%;
+  margin: 0.5% auto;
 }
 .modal__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: relative;
-  width: 100%;
   padding: 40px;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -105,9 +107,8 @@ main {
   text-align: center;
 }
 .modal__img {
-  width: 563px;
-  height: 750px;
-  margin: 0 auto;
+  display: block;
+  width: 100%;
   border-radius: 4px;
 }
 
@@ -117,4 +118,10 @@ main {
 
 .hide {
   display: none;
+}
+
+@media screen and (max-width: 1600px) {
+  .modal__dialog {
+    width: 34%;
+  }
 }/*# sourceMappingURL=style.css.map */
