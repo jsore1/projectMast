@@ -14,6 +14,14 @@ class Modal {
         this.close.dataset.close = true;
         this.close.classList.add('modal__close');
         this.close.innerHTML = '&times;';
+        this.next = document.createElement('div');
+        this.content.append(this.next);
+        this.next.dataset.next = true;
+        this.next.classList.add('modal__next');
+        this.back = document.createElement('div');
+        this.content.append(this.back);
+        this.back.dataset.back = true;
+        this.back.classList.add('modal__back');
         this.title = document.createElement('div');
         this.content.append(this.title);
         this.title.classList.add('modal__title');
@@ -50,7 +58,105 @@ const tbody = document.querySelector(".main-table").children[0].children[1],
 let modalTrigger = document.querySelectorAll('[data-modal]');
 let modalTriggerImg = document.querySelectorAll('[data-modal]');
 
-let requestSelect = new XMLHttpRequest();
+fetch('select_points.php', {
+    method: 'POST'
+}).then(data => data.json())
+.then(data => {
+    if (data.length > 0) {
+        data.forEach((el) => {
+            plan.insertAdjacentHTML(
+                "beforeend",
+                `<a href="#" data-modal>
+                    <div class="plan__point" style="top: ${el.y}px;left: ${el.x}px">
+                        <span>${el.name}</span>
+                    </div>
+                </a>`
+            );
+        });
+        const pointArray = document.querySelectorAll(".plan__point");
+        pointArray.forEach((element, index) => {
+            element.addEventListener("mouseenter", () => {
+                modalDialog.createImageDialog();
+                modalDialog.next.classList.add("hide");
+                modalDialog.back.classList.add("hide");
+                //Добавить спиннер загрузки
+                data.forEach((el) => {
+                    if ((el.id - 1) === index) {
+                        let formData = new FormData();
+                        formData.append("id", el.id);
+                        fetch('select_images_archive.php', {
+                            method: 'POST',
+                            body: formData
+                        }).then(data => data.json())
+                        .then(data => {
+                            data.push({
+                                url: el.url,
+                                description: el.date
+                            });
+                            //modalDialog.image.src = `${el.url}`;
+                            modalDialog.image.setAttribute("src", `${el.url}`);
+                            //modalDialog.image.style.background = `url(${el.url}) center center/cover no-repeat`;
+                            modalDialog.title.textContent = el.title;
+                            modalDialog.date.textContent = el.date;
+                            if (data.length > 1) {
+                                modalDialog.next.classList.remove("hide");
+                                modalDialog.back.classList.remove("hide");
+                                let arrIndex = data.length - 1;
+                                const modalNextBtn = document.querySelector('[data-next]');
+                                const modalBackBtn = document.querySelector('[data-back]');
+                                modalNextBtn.addEventListener("click", () => {
+                                    arrIndex = (arrIndex === data.length - 1) ? 0 : arrIndex + 1;
+                                    modalDialog.image.setAttribute("src", `${data[arrIndex].url}`);
+                                    modalDialog.date.textContent = data[arrIndex].description;
+                                });
+                                modalBackBtn.addEventListener("click", () => {
+                                    arrIndex = (arrIndex === 0) ? data.length - 1 : arrIndex - 1;
+                                    modalDialog.image.setAttribute("src", `${data[arrIndex].url}`);
+                                    modalDialog.date.textContent = data[arrIndex].description;
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+            element.addEventListener("click", (event) => {
+                if (isUpdatePoint) {
+                    event.preventDefault();
+                    if (confirm("Обновить точку?")) {
+                        const pointDate = prompt("Введите дату фото","Последняя дата съемки: dd.mm.yyyy");
+                        const pointImgUrl = prompt("Введите путь к фото","images/.jpg");
+                        if (pointDate === null || pointImgUrl === null) {
+                            return;
+                        }
+                        // Продолжить код с обновлением точки
+                        let request = new XMLHttpRequest();
+                        request.open('POST', 'update_point.php');
+                        let formData = new FormData();
+                        formData.append("id", index + 1);
+                        formData.append("date", pointDate);
+                        formData.append("url", pointImgUrl);
+                        request.send(formData);
+                        request.onload = () => {
+                            if (request.response === "1") {
+                                console.log("Точка обновлена!");
+                            }
+                        };
+                    }
+                }
+            });
+        });
+        modalTriggerImg = document.querySelectorAll('[data-modal]');
+
+        modalTriggerImg.forEach(btn => {
+            btn.addEventListener('click', function() {
+                modalDialog.modal.classList.add('show');
+                modalDialog.modal.classList.remove('hide');
+            });
+        });
+    }
+});
+
+/*let requestSelect = new XMLHttpRequest();
 requestSelect.open('POST', 'select_points.php');
 requestSelect.responseType = 'json';
 requestSelect.send();
@@ -117,7 +223,7 @@ requestSelect.onload = () => {
             });
         });
     }
-};
+};*/
 
 
 plan.addEventListener("click", (event) => {
