@@ -83,7 +83,7 @@ fetch('select_points.php', {
             element.addEventListener("mouseenter", () => {
                 modalDialog.next.classList.add("hide");
                 modalDialog.back.classList.add("hide");
-                //Добавить спиннер загрузки
+                modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
                 data.forEach((el) => {
                     if ((el.id - 1) === index) {
                         let formData = new FormData();
@@ -98,9 +98,7 @@ fetch('select_points.php', {
                                 url: el.url,
                                 description: el.date
                             });
-                            //modalDialog.image.src = `${el.url}`;
                             modalDialog.image.setAttribute("src", `${data[data.length - 1].url}`);
-                            //modalDialog.image.style.background = `url(${el.url}) center center/cover no-repeat`;
                             modalDialog.title.textContent = el.title;
                             modalDialog.date.textContent = data[data.length - 1].description;
                             if (data.length > 1) {
@@ -254,6 +252,7 @@ function updatePointToggle() {
 }
 
 function nextButtonClick(event) {
+    modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
     const data = event.target.data;
     event.target.arrIndex.index = (event.target.arrIndex.index === data.length - 1) ? 
         0 : 
@@ -263,6 +262,7 @@ function nextButtonClick(event) {
 }
 
 function backButtonClick(event) {
+    modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
     const data = event.target.data;
     event.target.arrIndex.index = (event.target.arrIndex.index === 0) ? 
         data.length - 1 : 
