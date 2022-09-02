@@ -69,7 +69,7 @@ main {
 }
 .modal__dialog {
   display: flex;
-  width: 37.5%;
+  width: 32%;
   margin: 0.5% auto;
 }
 .modal__content {
@@ -130,6 +130,10 @@ main {
   display: block;
   width: 100%;
   border-radius: 4px;
+}
+.modal__spinner {
+  display: block;
+  width: 100%;
 }
 
 .show {
