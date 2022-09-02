@@ -74,9 +74,13 @@ fetch('select_points.php', {
             );
         });
         const pointArray = document.querySelectorAll(".plan__point");
+        modalDialog.createImageDialog();
+        const modalNextBtn = document.querySelector('[data-next]');
+        const modalBackBtn = document.querySelector('[data-back]');
+        modalNextBtn.removeEventListener("click", nextButtonClick);
+        modalBackBtn.removeEventListener("click", backButtonClick);
         pointArray.forEach((element, index) => {
             element.addEventListener("mouseenter", () => {
-                modalDialog.createImageDialog();
                 modalDialog.next.classList.add("hide");
                 modalDialog.back.classList.add("hide");
                 //Добавить спиннер загрузки
@@ -89,31 +93,28 @@ fetch('select_points.php', {
                             body: formData
                         }).then(data => data.json())
                         .then(data => {
+                            console.log(data);
                             data.push({
                                 url: el.url,
                                 description: el.date
                             });
                             //modalDialog.image.src = `${el.url}`;
-                            modalDialog.image.setAttribute("src", `${el.url}`);
+                            modalDialog.image.setAttribute("src", `${data[data.length - 1].url}`);
                             //modalDialog.image.style.background = `url(${el.url}) center center/cover no-repeat`;
                             modalDialog.title.textContent = el.title;
-                            modalDialog.date.textContent = el.date;
+                            modalDialog.date.textContent = data[data.length - 1].description;
                             if (data.length > 1) {
                                 modalDialog.next.classList.remove("hide");
                                 modalDialog.back.classList.remove("hide");
-                                let arrIndex = data.length - 1;
-                                const modalNextBtn = document.querySelector('[data-next]');
-                                const modalBackBtn = document.querySelector('[data-back]');
-                                modalNextBtn.addEventListener("click", () => {
-                                    arrIndex = (arrIndex === data.length - 1) ? 0 : arrIndex + 1;
-                                    modalDialog.image.setAttribute("src", `${data[arrIndex].url}`);
-                                    modalDialog.date.textContent = data[arrIndex].description;
-                                });
-                                modalBackBtn.addEventListener("click", () => {
-                                    arrIndex = (arrIndex === 0) ? data.length - 1 : arrIndex - 1;
-                                    modalDialog.image.setAttribute("src", `${data[arrIndex].url}`);
-                                    modalDialog.date.textContent = data[arrIndex].description;
-                                });
+                                let arrIndex = {
+                                    index: data.length - 1
+                                };
+                                modalNextBtn.addEventListener("click", nextButtonClick);
+                                modalNextBtn.data = data;
+                                modalNextBtn.arrIndex = arrIndex;
+                                modalBackBtn.addEventListener("click", backButtonClick);
+                                modalBackBtn.data = data;
+                                modalBackBtn.arrIndex = arrIndex;
                             }
                         });
                     }
@@ -155,76 +156,6 @@ fetch('select_points.php', {
         });
     }
 });
-
-/*let requestSelect = new XMLHttpRequest();
-requestSelect.open('POST', 'select_points.php');
-requestSelect.responseType = 'json';
-requestSelect.send();
-requestSelect.onload = () => {
-    const array = requestSelect.response;
-    if (array.length > 0) {
-        array.forEach((el) => {
-            plan.insertAdjacentHTML(
-                "beforeend",
-                `<a href="#" data-modal>
-                    <div class="plan__point" style="top: ${el.y}px;left: ${el.x}px">
-                        <span>${el.name}</span>
-                    </div>
-                </a>`
-            );
-        });
-        const pointArray = document.querySelectorAll(".plan__point");
-        pointArray.forEach((element, index) => {
-            element.addEventListener("mouseenter", () => {
-                modalDialog.createImageDialog();
-                array.forEach((el) => {
-                    if ((el.id - 1) === index) {
-                        //modalDialog.image.src = `${el.url}`;
-                        modalDialog.image.setAttribute("src", `${el.url}`);
-                        //modalDialog.image.style.background = `url(${el.url}) center center/cover no-repeat`;
-                        console.log("text");
-                        modalDialog.title.textContent = el.title;
-                        modalDialog.date.textContent = el.date;
-                    }
-                });
-            });
-            element.addEventListener("click", (event) => {
-                if (isUpdatePoint) {
-                    event.preventDefault();
-                    if (confirm("Обновить точку?")) {
-                        const pointDate = prompt("Введите дату фото","Последняя дата съемки: dd.mm.yyyy");
-                        const pointImgUrl = prompt("Введите путь к фото","images/.jpg");
-                        if (pointDate === null || pointImgUrl === null) {
-                            return;
-                        }
-                        // Продолжить код с обновлением точки
-                        let request = new XMLHttpRequest();
-                        request.open('POST', 'update_point.php');
-                        let formData = new FormData();
-                        formData.append("id", index + 1);
-                        formData.append("date", pointDate);
-                        formData.append("url", pointImgUrl);
-                        request.send(formData);
-                        request.onload = () => {
-                            if (request.response === "1") {
-                                console.log("Точка обновлена!");
-                            }
-                        };
-                    }
-                }
-            });
-        });
-        modalTriggerImg = document.querySelectorAll('[data-modal]');
-
-        modalTriggerImg.forEach(btn => {
-            btn.addEventListener('click', function() {
-                modalDialog.modal.classList.add('show');
-                modalDialog.modal.classList.remove('hide');
-            });
-        });
-    }
-};*/
-
 
 plan.addEventListener("click", (event) => {
     if (isAddPoint) {
@@ -320,4 +251,22 @@ function addPointToggle() {
 
 function updatePointToggle() {
     isUpdatePoint = (isUpdatePoint) ? false : true;
+}
+
+function nextButtonClick(event) {
+    const data = event.target.data;
+    event.target.arrIndex.index = (event.target.arrIndex.index === data.length - 1) ? 
+        0 : 
+        event.target.arrIndex.index + 1;
+    modalDialog.image.setAttribute("src", `${data[event.target.arrIndex.index].url}`);
+    modalDialog.date.textContent = data[event.target.arrIndex.index].description;
+}
+
+function backButtonClick(event) {
+    const data = event.target.data;
+    event.target.arrIndex.index = (event.target.arrIndex.index === 0) ? 
+        data.length - 1 : 
+        event.target.arrIndex.index - 1;
+    modalDialog.image.setAttribute("src", `${data[event.target.arrIndex.index].url}`);
+    modalDialog.date.textContent = data[event.target.arrIndex.index].description;
 }
