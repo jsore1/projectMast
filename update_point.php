@@ -1,7 +1,7 @@
 <?php
 require_once('connect_db.php');
 
-if (isset($_POST['id']) && isset($_POST['date']) && isset($_POST['url'])) {
+if (isset($_POST['id']) && isset($_POST['date']) && isset($_POST['url']) && isset($_POST['description'])) {
 	$id = $_POST['id'];
 	$date = $_POST['date'];
 	$url = $_POST['url'];
@@ -13,12 +13,12 @@ if (isset($_POST['id']) && isset($_POST['date']) && isset($_POST['url'])) {
 		$array = [':point_id' => $row->id, ':url' => $row->url_image, ':date' => $row->date];
 	}
 	
-	$sql_archive = "INSERT INTO `img_archive` (`url`, `date`, `point_id`) VALUES (:url, :date, :point_id)";
+	$sql_archive = "INSERT INTO `img_archive` (`url`, `description`, `date`, `point_id`) VALUES (:url, :date, '0000-00-00', :point_id)";
 	$stmt_archive = $db->prepare($sql_archive);
 	$stmt_archive->execute($array);
 	
 	$id = $_POST['id'];
-	$date = $_POST['date'];
+	$date = $_POST['description'];
 	$url = $_POST['url'];
 	$sql = "UPDATE `point_list` SET `date` = :date, `url_image` = :url WHERE `id` = :id";
 	$stmt = $db->prepare($sql);
