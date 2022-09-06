@@ -1,9 +1,9 @@
 <?php
 require_once('connect_db.php');
 
-if (isset($_POST['id']) && isset($_POST['date']) && isset($_POST['url']) && isset($_POST['description'])) {
+if (isset($_POST['id']) && isset($_POST['url']) && isset($_POST['description'])) {
 	$id = $_POST['id'];
-	$date = $_POST['date'];
+	$date = $_POST['description'];
 	$url = $_POST['url'];
 	
 	$sql_point = "SELECT * FROM `point_list` WHERE `id` = :id";
