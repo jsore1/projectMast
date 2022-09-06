@@ -123,9 +123,8 @@ fetch('select_points.php', {
                     event.preventDefault();
                     if (confirm("Обновить точку?")) {
                         const description = prompt("Введите дату фото", "Дата съемки: dd.mm.yyyy");
-                        const date = prompt("Введите дату снимка","yyyy-mm-dd");
                         const pointImgUrl = prompt("Введите путь к фото", "images/photo_dd_mm_yy/.jpg");
-                        if (description === null || date === null || pointImgUrl === null) {
+                        if (description === null || pointImgUrl === null) {
                             return;
                         }
                         // Продолжить код с обновлением точки
@@ -134,7 +133,6 @@ fetch('select_points.php', {
                         let formData = new FormData();
                         formData.append("id", index + 1);
                         formData.append("description", description);
-                        formData.append("date", date);
                         formData.append("url", pointImgUrl);
                         request.send(formData);
                         request.onload = () => {
