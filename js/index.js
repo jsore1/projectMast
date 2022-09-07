@@ -148,6 +148,14 @@ fetch('select_points.php', {
 
         modalTriggerImg.forEach(btn => {
             btn.addEventListener('click', function() {
+                // Делаю размер окна больше, если ширина картинки больше, чем высота
+                const modalWindow = document.querySelector(".modal__dialog");
+                if (modalDialog.image.width > modalDialog.image.height) {
+                    modalWindow.style.width = "54.5%";
+                } else {
+                    modalWindow.style.width = "32%";
+                }
+
                 modalDialog.modal.classList.add('show');
                 modalDialog.modal.classList.remove('hide');
             });
