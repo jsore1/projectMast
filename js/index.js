@@ -83,6 +83,11 @@ fetch('select_points.php', {
             element.addEventListener("mouseenter", () => {
                 modalDialog.next.classList.add("hide");
                 modalDialog.back.classList.add("hide");
+                if (modalDialog.image.width > modalDialog.image.height) {
+                    modalDialog.image.setAttribute("src", `images/icons/spinner_w.svg`);
+                } else {
+                    modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
+                }
                 data.forEach((el) => {
                     if ((el.id - 1) === index) {
                         let formData = new FormData();
@@ -146,7 +151,12 @@ fetch('select_points.php', {
 
         modalTriggerImg.forEach(btn => {
             btn.addEventListener('click', function() {
-                isWindowSize(false);
+                const modalWindow = document.querySelector(".modal__dialog");
+                if (modalDialog.image.width > modalDialog.image.height) {
+                    modalWindow.style.width = "54.5%";
+                } else {
+                    modalWindow.style.width = "32%";
+                }
                 modalDialog.modal.classList.add('show');
                 modalDialog.modal.classList.remove('hide');
             });
@@ -251,8 +261,7 @@ function updatePointToggle() {
 }
 
 function nextButtonClick(event) {
-    isWindowSize(true);
-    //modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
+    modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
     const data = event.target.data;
     event.target.arrIndex.index = (event.target.arrIndex.index === data.length - 1) ? 
         0 : 
@@ -262,28 +271,11 @@ function nextButtonClick(event) {
 }
 
 function backButtonClick(event) {
-    isWindowSize(true);
-    //modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
+    modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
     const data = event.target.data;
     event.target.arrIndex.index = (event.target.arrIndex.index === 0) ? 
         data.length - 1 : 
         event.target.arrIndex.index - 1;
     modalDialog.image.setAttribute("src", `${data[event.target.arrIndex.index].url}`);
     modalDialog.date.textContent = data[event.target.arrIndex.index].description;
-}
-
-function isWindowSize(isSpinner) {
-    // Делаю размер окна больше, если ширина картинки больше, чем высота
-    const modalWindow = document.querySelector(".modal__dialog");
-    if (modalDialog.image.width > modalDialog.image.height) {
-        if (isSpinner) {
-            modalDialog.image.setAttribute("src", `images/icons/spinner_w.svg`);
-        }
-        modalWindow.style.width = "54.5%";
-    } else {
-        if (isSpinner) {
-            modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
-        }
-        modalWindow.style.width = "32%";
-    }
 }
