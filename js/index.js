@@ -268,6 +268,12 @@ function nextButtonClick(event) {
         event.target.arrIndex.index + 1;
     modalDialog.image.setAttribute("src", `${data[event.target.arrIndex.index].url}`);
     modalDialog.date.textContent = data[event.target.arrIndex.index].description;
+    const modalWindow = document.querySelector(".modal__dialog");
+    if (modalDialog.image.width > modalDialog.image.height) {
+        modalWindow.style.width = "54.5%";
+    } else {
+        modalWindow.style.width = "32%";
+    }
 }
 
 function backButtonClick(event) {
@@ -278,4 +284,10 @@ function backButtonClick(event) {
         event.target.arrIndex.index - 1;
     modalDialog.image.setAttribute("src", `${data[event.target.arrIndex.index].url}`);
     modalDialog.date.textContent = data[event.target.arrIndex.index].description;
+    const modalWindow = document.querySelector(".modal__dialog");
+    if (modalDialog.image.width > modalDialog.image.height) {
+        modalWindow.style.width = "54.5%";
+    } else {
+        modalWindow.style.width = "32%";
+    }
 }
