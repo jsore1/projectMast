@@ -14,14 +14,6 @@ class Modal {
         this.close.dataset.close = true;
         this.close.classList.add('modal__close');
         this.close.innerHTML = '&times;';
-        this.next = document.createElement('div');
-        this.content.append(this.next);
-        this.next.dataset.next = true;
-        this.next.classList.add('modal__next');
-        this.back = document.createElement('div');
-        this.content.append(this.back);
-        this.back.dataset.back = true;
-        this.back.classList.add('modal__back');
         this.title = document.createElement('div');
         this.content.append(this.title);
         this.title.classList.add('modal__title');
@@ -31,6 +23,8 @@ class Modal {
         if (this.image) {this.image.remove();}
         if (this.date) {this.date.remove();}
         if (this.text) {this.text.remove();}
+        if (this.next) {this.next.remove();}
+        if (this.back) {this.back.remove();}
         this.text = document.createElement('div');
         this.content.append(this.text);
         this.text.classList.add('modal__text');
@@ -40,12 +34,22 @@ class Modal {
         if (this.text) {this.text.remove();}
         if (this.image) {this.image.remove();}
         if (this.date) {this.date.remove();}
+        if (this.next) {this.next.remove();}
+        if (this.back) {this.back.remove();}
         this.image = document.createElement('img');
         this.image.classList.add('modal__img');
         this.content.prepend(this.image);
         this.date = document.createElement('div');
         this.content.append(this.date);
         this.date.classList.add('modal__date');
+        this.next = document.createElement('div');
+        this.content.append(this.next);
+        this.next.dataset.next = true;
+        this.next.classList.add('modal__next');
+        this.back = document.createElement('div');
+        this.content.append(this.back);
+        this.back.dataset.back = true;
+        this.back.classList.add('modal__back');
     }
 }
 let isAddPoint = false;
@@ -74,15 +78,11 @@ fetch('select_points.php', {
             );
         });
         const pointArray = document.querySelectorAll(".plan__point");
-        modalDialog.createImageDialog();
-        const modalNextBtn = document.querySelector('[data-next]');
-        const modalBackBtn = document.querySelector('[data-back]');
-        modalNextBtn.removeEventListener("click", nextButtonClick);
-        modalBackBtn.removeEventListener("click", backButtonClick);
         pointArray.forEach((element, index) => {
             element.addEventListener("mouseenter", () => {
-                modalDialog.next.classList.add("hide");
-                modalDialog.back.classList.add("hide");
+                modalDialog.createImageDialog();
+                modalDialog.next.removeEventListener("click", nextButtonClick);
+                modalDialog.back.removeEventListener("click", backButtonClick);
                 if (modalDialog.image.width > modalDialog.image.height) {
                     modalDialog.image.setAttribute("src", `images/icons/spinner_w.svg`);
                 } else {
@@ -105,17 +105,18 @@ fetch('select_points.php', {
                             modalDialog.title.textContent = el.title;
                             modalDialog.date.textContent = data[data.length - 1].description;
                             if (data.length > 1) {
-                                modalDialog.next.classList.remove("hide");
-                                modalDialog.back.classList.remove("hide");
                                 let arrIndex = {
                                     index: data.length - 1
                                 };
-                                modalNextBtn.addEventListener("click", nextButtonClick);
-                                modalNextBtn.data = data;
-                                modalNextBtn.arrIndex = arrIndex;
-                                modalBackBtn.addEventListener("click", backButtonClick);
-                                modalBackBtn.data = data;
-                                modalBackBtn.arrIndex = arrIndex;
+                                modalDialog.next.addEventListener("click", nextButtonClick);
+                                modalDialog.next.data = data;
+                                modalDialog.next.arrIndex = arrIndex;
+                                modalDialog.back.addEventListener("click", backButtonClick);
+                                modalDialog.back.data = data;
+                                modalDialog.back.arrIndex = arrIndex;
+                            } else {
+                                modalDialog.next.remove();
+                                modalDialog.back.remove();
                             }
                         });
                     }
@@ -152,7 +153,7 @@ fetch('select_points.php', {
         modalTriggerImg.forEach(btn => {
             btn.addEventListener('click', function() {
                 const modalWindow = document.querySelector(".modal__dialog");
-                if (modalDialog.image.width > modalDialog.image.height) {
+                if (modalDialog.image && (modalDialog.image.width > modalDialog.image.height)) {
                     modalWindow.style.width = "54.5%";
                 } else {
                     modalWindow.style.width = "32%";
