@@ -20,6 +20,7 @@ class Modal {
     }
     
     createReportDialog() {
+        if (this.spinner) {this.spinner.remove();}
         if (this.image) {this.image.remove();}
         if (this.date) {this.date.remove();}
         if (this.text) {this.text.remove();}
@@ -32,13 +33,28 @@ class Modal {
 
     createImageDialog() {
         if (this.text) {this.text.remove();}
+        if (this.spinner) {this.spinner.remove();}
         if (this.image) {this.image.remove();}
         if (this.date) {this.date.remove();}
         if (this.next) {this.next.remove();}
         if (this.back) {this.back.remove();}
+        this.spinner = document.createElement('img');
+        this.spinner.classList.add('modal__spinner');
+        this.spinner.setAttribute("src", `images/icons/spinner_w.svg`);
+        this.content.prepend(this.spinner);
         this.image = document.createElement('img');
+        this.image.onload = () => {
+            if (this.image && (this.image.width > this.image.height)) {
+                this.dialog.style.width = "54.5%";
+            } else {
+                this.dialog.style.width = "32%";
+            }
+            this.spinner.classList.add("hide");
+            this.image.classList.remove("hide");
+        };
         this.image.classList.add('modal__img');
         this.content.prepend(this.image);
+        this.image.classList.add("hide");
         this.date = document.createElement('div');
         this.content.append(this.date);
         this.date.classList.add('modal__date');
@@ -83,11 +99,6 @@ fetch('select_points.php', {
                 modalDialog.createImageDialog();
                 modalDialog.next.removeEventListener("click", nextButtonClick);
                 modalDialog.back.removeEventListener("click", backButtonClick);
-                if (modalDialog.image.width > modalDialog.image.height) {
-                    modalDialog.image.setAttribute("src", `images/icons/spinner_w.svg`);
-                } else {
-                    modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
-                }
                 data.forEach((el) => {
                     if ((el.id - 1) === index) {
                         let formData = new FormData();
@@ -152,12 +163,6 @@ fetch('select_points.php', {
 
         modalTriggerImg.forEach(btn => {
             btn.addEventListener('click', function() {
-                const modalWindow = document.querySelector(".modal__dialog");
-                if (modalDialog.image && (modalDialog.image.width > modalDialog.image.height)) {
-                    modalWindow.style.width = "54.5%";
-                } else {
-                    modalWindow.style.width = "32%";
-                }
                 modalDialog.modal.classList.add('show');
                 modalDialog.modal.classList.remove('hide');
             });
@@ -262,7 +267,8 @@ function updatePointToggle() {
 }
 
 function nextButtonClick(event) {
-    modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
+    modalDialog.spinner.classList.remove("hide");
+    modalDialog.image.classList.add("hide");
     const data = event.target.data;
     event.target.arrIndex.index = (event.target.arrIndex.index === data.length - 1) ? 
         0 : 
@@ -278,7 +284,8 @@ function nextButtonClick(event) {
 }
 
 function backButtonClick(event) {
-    modalDialog.image.setAttribute("src", `images/icons/spinner.svg`);
+    modalDialog.spinner.classList.remove("hide");
+    modalDialog.image.classList.add("hide");
     const data = event.target.data;
     event.target.arrIndex.index = (event.target.arrIndex.index === 0) ? 
         data.length - 1 : 
