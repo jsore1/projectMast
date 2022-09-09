@@ -20,7 +20,6 @@ class Modal {
     }
     
     createReportDialog() {
-        if (this.spinner) {this.spinner.remove();}
         if (this.image) {this.image.remove();}
         if (this.date) {this.date.remove();}
         if (this.text) {this.text.remove();}
@@ -33,15 +32,10 @@ class Modal {
 
     createImageDialog() {
         if (this.text) {this.text.remove();}
-        if (this.spinner) {this.spinner.remove();}
         if (this.image) {this.image.remove();}
         if (this.date) {this.date.remove();}
         if (this.next) {this.next.remove();}
         if (this.back) {this.back.remove();}
-        this.spinner = document.createElement('img');
-        this.spinner.classList.add('modal__spinner');
-        this.spinner.setAttribute("src", `images/icons/spinner_w.svg`);
-        this.content.prepend(this.spinner);
         this.image = document.createElement('img');
         this.image.onload = () => {
             if (this.image && (this.image.width > this.image.height)) {
@@ -49,12 +43,9 @@ class Modal {
             } else {
                 this.dialog.style.width = "32%";
             }
-            this.spinner.classList.add("hide");
-            this.image.classList.remove("hide");
         };
         this.image.classList.add('modal__img');
         this.content.prepend(this.image);
-        this.image.classList.add("hide");
         this.date = document.createElement('div');
         this.content.append(this.date);
         this.date.classList.add('modal__date');
@@ -164,7 +155,6 @@ fetch('select_points.php', {
         modalTriggerImg.forEach(btn => {
             btn.addEventListener('click', function() {
                 modalDialog.modal.classList.add('show');
-                modalDialog.modal.classList.remove('hide');
             });
         });
     }
@@ -246,7 +236,6 @@ requestTable.onload = () => {
 
 // Функция, которая закрывает модальное окно
 function closeModal() {
-    modalDialog.modal.classList.add('hide');
     modalDialog.modal.classList.remove('show');
 }
 
@@ -267,8 +256,6 @@ function updatePointToggle() {
 }
 
 function nextButtonClick(event) {
-    modalDialog.spinner.classList.remove("hide");
-    modalDialog.image.classList.add("hide");
     const data = event.target.data;
     event.target.arrIndex.index = (event.target.arrIndex.index === data.length - 1) ? 
         0 : 
@@ -284,8 +271,6 @@ function nextButtonClick(event) {
 }
 
 function backButtonClick(event) {
-    modalDialog.spinner.classList.remove("hide");
-    modalDialog.image.classList.add("hide");
     const data = event.target.data;
     event.target.arrIndex.index = (event.target.arrIndex.index === 0) ? 
         data.length - 1 : 
