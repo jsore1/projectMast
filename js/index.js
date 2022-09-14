@@ -66,22 +66,19 @@ const modalDialog = new Modal();
 
 const tbody = document.querySelector(".main-table").children[0].children[1],
     plan = document.querySelector(".plan");
-let modalTrigger = document.querySelectorAll('[data-modal]');
-let modalTriggerImg = document.querySelectorAll('[data-modal]');
 
 fetch('select_points.php', {
     method: 'POST'
-}).then(data => data.json())
+})
+.then(data => data.json())
 .then(data => {
     if (data.length > 0) {
         data.forEach((el) => {
             plan.insertAdjacentHTML(
                 "beforeend",
-                `<a href="#" data-modal>
-                    <div class="plan__point" style="top: ${el.y}px;left: ${el.x}px">
-                        <span>${el.name}</span>
-                    </div>
-                </a>`
+                `<div class="plan__point" style="top: ${el.y}px;left: ${el.x}px">
+                    <span>${el.name}</span>
+                </div>`
             );
         });
         const pointArray = document.querySelectorAll(".plan__point");
@@ -147,14 +144,9 @@ fetch('select_points.php', {
                             }
                         };
                     }
+                } else {
+                    openModal();
                 }
-            });
-        });
-        modalTriggerImg = document.querySelectorAll('[data-modal]');
-
-        modalTriggerImg.forEach(btn => {
-            btn.addEventListener('click', function() {
-                modalDialog.modal.classList.add('show');
             });
         });
     }
@@ -198,25 +190,23 @@ plan.addEventListener("click", (event) => {
     }
 });
 
-let requestTable = new XMLHttpRequest();
-requestTable.open('GET', `table.json`);
-requestTable.responseType = 'json';
-requestTable.send();
-requestTable.onload = () => {
-    const obj = requestTable.response;
-
-    obj.table.forEach((el, index) => {
-        const report = (el.report) ? `<a href="#" data-modal>Открыть</a>` : ``;
+fetch('get_table.php', {
+    method: 'POST'
+})
+.then(data => data.json())
+.then(data => {
+    data.reverse().forEach((el, index) => {
+        const report = (el.reportBool) ? `<a href="#" data-modal>Открыть</a>` : ``;
         const tr = `<tr>
                         <td>${el.date}</td>
-                        <td>${el.numberObj}</td>
-                        <td>${el.descr}</td>
+                        <td>${el.numberObject}</td>
+                        <td>${el.description}</td>
                         <td>${el.secondName}</td>
                         <td>${report}</td>
                     </tr>`;
         tbody.insertAdjacentHTML('beforeend', tr);
 
-        if (el.report) {
+        if (el.reportBool) {
             tbody.children[index].children[4].children[0].addEventListener("mouseenter", () => {
                 modalDialog.createReportDialog();
                 modalDialog.title.textContent = 'Отчет';
@@ -224,33 +214,39 @@ requestTable.onload = () => {
             });
         }
     });
-    modalTrigger = document.querySelectorAll('[data-modal]');
+    const modalTrigger = document.querySelector('[data-modal]');
 
-    modalTrigger.forEach(btn => {
-        btn.addEventListener('click', function() {
-            modalDialog.modal.classList.add('show');
-            modalDialog.modal.classList.remove('hide');
-        });
+    modalTrigger.addEventListener('click', function() {
+        openModal();
     });
-};
+});
+
+// Функция, которая открывает модальное окно
+function openModal() {
+    modalDialog.modal.classList.add('show');
+}
 
 // Функция, которая закрывает модальное окно
 function closeModal() {
     modalDialog.modal.classList.remove('show');
 }
 
+// Закрыть модальное окно, если кликнули на элемент крестик
 modalDialog.close.addEventListener('click', closeModal);
 
+// Закрыть модальное окно, если кликнули не на окно
 modalDialog.modal.addEventListener('click', (e) => {
     if (e.target === modalDialog.modal) {
         closeModal();
     }
 });
 
+// Функция, которая включает добавление точек на план
 function addPointToggle() {
     isAddPoint = (isAddPoint) ? false : true;
 }
 
+// Функция, которая включает обновление точек на плане
 function updatePointToggle() {
     isUpdatePoint = (isUpdatePoint) ? false : true;
 }
