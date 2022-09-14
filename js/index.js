@@ -84,6 +84,8 @@ fetch('select_points.php', {
         const pointArray = document.querySelectorAll(".plan__point");
         pointArray.forEach((element, index) => {
             element.addEventListener("mouseenter", () => {
+                // Сделать все это в классе Modal
+                // Data передавать в метод класса Modal
                 modalDialog.createImageDialog();
                 modalDialog.next.removeEventListener("click", nextButtonClick);
                 modalDialog.back.removeEventListener("click", backButtonClick);
