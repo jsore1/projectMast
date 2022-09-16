@@ -34,11 +34,6 @@ main {
   text-decoration: none;
   color: black;
 }
-.plan span {
-  font-weight: bold;
-  display: block;
-  padding-top: 3px;
-}
 .plan img {
   border-radius: 50px;
   width: 784px;
@@ -53,6 +48,9 @@ main {
   border-radius: 50%;
   border: 1px solid black;
   font-size: 8px;
+  font-weight: bold;
+  display: block;
+  padding-top: 3px;
   cursor: pointer;
 }
 
@@ -68,17 +66,30 @@ main {
   background-color: rgba(0, 0, 0, 0.5);
   font-size: 18px;
 }
-.modal__dialog {
+.modal__image-wrapper {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+  padding-top: 40px;
+}
+.modal__image-inner {
   display: flex;
-  width: 32%;
-  margin: 0.5% auto;
+  height: 100%;
+}
+.modal__image-card {
+  width: 100%;
+  height: 100%;
 }
 .modal__content {
   display: flex;
+  width: 34vw;
+  height: 100vh;
   flex-direction: column;
   justify-content: center;
   position: relative;
-  padding: 40px;
+  margin: 0 auto;
+  padding: 0px 40px;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
@@ -125,12 +136,12 @@ main {
 }
 .modal__date {
   padding-top: 10px;
+  padding-bottom: 40px;
   text-align: center;
 }
 .modal__img {
-  display: block;
   width: 100%;
-  border-radius: 4px;
+  height: 100%;
 }
 .modal__spinner {
   display: block;

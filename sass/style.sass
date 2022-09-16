@@ -25,10 +25,6 @@ main
     a
         text-decoration: none
         color: black
-    span
-        font-weight: bold
-        display: block
-        padding-top: 3px
     img
         border-radius: 50px
         width: 784px
@@ -42,6 +38,9 @@ main
         border-radius: 50%
         border: 1px solid black
         font-size: 8px
+        font-weight: bold
+        display: block
+        padding-top: 3px
         cursor: pointer
 
 .modal
@@ -55,16 +54,27 @@ main
     overflow: hidden
     background-color: rgba(0, 0, 0, .5)
     font-size: 18px
-    &__dialog
+    &__image-wrapper
+        display: block
+        width: 100%
+        overflow: hidden
+        margin: 0 auto
+        padding-top: 40px
+    &__image-inner
         display: flex
-        width: 32%
-        margin: 0.5% auto
+        height: 100%
+    &__image-card
+        width: 100%
+        height: 100%
     &__content
         display: flex
+        width: 34vw
+        height: 100vh
         flex-direction: column
         justify-content: center
         position: relative
-        padding: 40px
+        margin: 0 auto
+        padding: 0px 40px
         background-color: #fff
         border: 1px solid rgba(0, 0, 0, .2)
         border-radius: 4px
@@ -105,11 +115,11 @@ main
         padding-top: 20px
     &__date
         padding-top: 10px
+        padding-bottom: 40px
         text-align: center
     &__img
-        display: block
         width: 100%
-        border-radius: 4px
+        height: 100%
     &__spinner
         display: block
         width: 100%
