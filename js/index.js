@@ -86,6 +86,7 @@ function renderImageModal(pointsArray, pointId, imagesArray) {
           modalImageInner = document.querySelector(".modal__image-inner"),
           nextButton = document.querySelector(".modal__next"),
           backButton = document.querySelector(".modal__back"),
+          loader = document.querySelector(".loader"),
           imagesPromiseArray = [];
 
     clearImages();
@@ -93,12 +94,14 @@ function renderImageModal(pointsArray, pointId, imagesArray) {
     modalTitle.textContent = pointsArray[pointId-1].title;
     modalDate.textContent = imagesArray[0].description;
     modalImageInner.style.width = `${imagesArray.length * 100}%`;
+    loader.classList.add("show");
     if (imagesArray.length > 1) {
         imagesArray.forEach((el, index) => {
             imagesPromiseArray.push(createImage(imagesArray[index].url, modalImageInner));
         });
         Promise.all(imagesPromiseArray)
         .then(() => {
+            loader.classList.remove("show");
             openModal('.modal');
             slider(imagesArray);
         });
@@ -108,6 +111,7 @@ function renderImageModal(pointsArray, pointId, imagesArray) {
             modalImageInner.style.transform = 'none';
             nextButton.classList.add("hide");
             backButton.classList.add("hide");
+            loader.classList.remove("show");
             openModal('.modal');
         });
     }
@@ -233,11 +237,11 @@ fetch('get_table.php', {
         //     });
         // }
     });
-    const modalTrigger = document.querySelector('[data-modal]');
+    //const modalTrigger = document.querySelector('[data-modal]');
 
-    modalTrigger.addEventListener('click', function() {
-        openModal(".modal");
-    });
+    //modalTrigger.addEventListener('click', function() {
+        //openModal(".modal");
+    //});
 });
 
 // Функция, которая открывает модальное окно
