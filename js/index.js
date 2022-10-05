@@ -49,18 +49,18 @@ function slider(imagesArray) {
     nextButton.classList.remove("hide");
     backButton.classList.remove("hide");
     let offset = +width.slice(0, width.length - 2) * (imagesArray.length - 1);
-    let imageId = imagesArray.length - 1;
+    let imageId = 0;
     modalImageInner.style.transform = `translateX(-${offset}px)`;
     nextButton.addEventListener("click", () => {
         modalImageInner.style.transition = "0.5s all";
-        if (offset == (+width.slice(0, width.length - 2) * (imagesArray.length - 1))) {
+        if (+offset.toFixed(1) == +(+width.slice(0, width.length - 2) * (imagesArray.length - 1)).toFixed(1)) {
             offset = 0;
             imageId = imagesArray.length - 1;
         } else {
             offset += +width.slice(0, width.length - 2);
             imageId -= 1;
         }
-
+        
         modalImageInner.style.transform = `translateX(-${offset}px)`;
         modalDate.textContent = imagesArray[imageId].description;
     });
