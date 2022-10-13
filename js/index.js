@@ -121,7 +121,6 @@ function pointClickTrigger(pointsArray, planSelector, pointSelector) {
     const plan = document.querySelector(planSelector);
     plan.addEventListener('click', (event) => {
         const pointId = +event.target.getAttribute("data-id");
-
         if (isUpdatePoint && (event.target && event.target.className === pointSelector)) {
             event.preventDefault();
             if (confirm("Обновить точку?")) {
@@ -146,25 +145,7 @@ function pointClickTrigger(pointsArray, planSelector, pointSelector) {
                     }
                 });
             }
-        } else {
-            if (event.target && event.target.className === pointSelector) {
-                let formData = new FormData();
-                formData.append("id", pointId);
-                fetch('select_images_archive.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(data => data.json())
-                .then(imagesArray => {
-                    imagesArray.push({
-                        url: pointsArray[pointId-1].url,
-                        description: pointsArray[pointId-1].date
-                    });
-                    renderImageModal(pointsArray, pointId, imagesArray.reverse());
-                });
-            }
-        }
-        if (isAddPoint && (event.target && event.target.tagName === "img")) {
+        } else if (isAddPoint && (event.target && event.target.tagName === "IMG")) {
             if (confirm("Добавить новую точку на план?")) {
                 const top = event.offsetY - 10, left = event.offsetX - 10;
                 const pointName = prompt("Введите имя для точки", "имя точки");
@@ -199,6 +180,23 @@ function pointClickTrigger(pointsArray, planSelector, pointSelector) {
                                 </div>`
                         );
                     }
+                });
+            }
+        } else {
+            if (event.target && event.target.className === pointSelector) {
+                let formData = new FormData();
+                formData.append("id", pointId);
+                fetch('select_images_archive.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(data => data.json())
+                .then(imagesArray => {
+                    imagesArray.push({
+                        url: pointsArray[pointId-1].url,
+                        description: pointsArray[pointId-1].date
+                    });
+                    renderImageModal(pointsArray, pointId, imagesArray.reverse());
                 });
             }
         }
@@ -268,6 +266,7 @@ modal.addEventListener('click', (e) => {
 // Функция, которая включает добавление точек на план
 function addPointToggle() {
     isAddPoint = (isAddPoint) ? false : true;
+    console.log(isAddPoint);
 }
 
 // Функция, которая включает обновление точек на плане
