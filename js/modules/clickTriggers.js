@@ -4,26 +4,31 @@ import {closeModal} from './modal';
 function mapClickTrigger(pointsArray, planSelector, pointSelector) {
     let isAddPoint = false;
     let isUpdatePoint = false;
+    const addCheckbox = document.getElementById("add-point");
+    const updateCheckbox = document.getElementById("update-point");
 
-    // Функция, которая включает добавление точек на план
-    const addPointToggle = () => {
-        isAddPoint = (isAddPoint) ? false : true;
-        console.log(isAddPoint);
-    };
-
-    // Функция, которая включает обновление точек на плане
-    const updatePointToggle = ()=> {
-        isUpdatePoint = (isUpdatePoint) ? false : true;
-    };
+    addCheckbox.addEventListener("change", () => {
+        isAddPoint = addCheckbox.checked;
+    });
+    updateCheckbox.addEventListener("change", () => {
+        isUpdatePoint = updateCheckbox.checked;
+    });
 
     const plan = document.querySelector(planSelector);
     plan.addEventListener('click', (event) => {
         const pointId = +event.target.getAttribute("data-id");
         if (isUpdatePoint && (event.target && event.target.className === pointSelector)) {
+            let currentDate = new Date();
             event.preventDefault();
             if (confirm("Обновить точку?")) {
-                const description = prompt("Введите дату фото", "Дата съемки: dd.mm.yyyy");
-                const pointImgUrl = prompt("Введите путь к фото", "images/photo_dd_mm_yy/.jpg");
+                const description = prompt(
+                    "Введите дату фото", 
+                    `Дата съемки: ${currentDate.getDate()}.${+currentDate.getMonth()+1}.${currentDate.getFullYear()}`
+                );
+                const pointImgUrl = prompt(
+                    "Введите путь к фото", 
+                    `images/photo_${currentDate.getDate()}_${+currentDate.getMonth()+1}_${currentDate.getFullYear()}/`
+                );
                 if (description === null || pointImgUrl === null) {
                     return;
                 }
@@ -45,11 +50,18 @@ function mapClickTrigger(pointsArray, planSelector, pointSelector) {
             }
         } else if (isAddPoint && (event.target && event.target.tagName === "IMG")) {
             if (confirm("Добавить новую точку на план?")) {
+                let currentDate = new Date();
                 const top = event.offsetY - 10, left = event.offsetX - 10;
                 const pointName = prompt("Введите имя для точки", "имя точки");
                 const pointTitle = prompt("Введите название для фото", "название фото");
-                const pointDate = prompt("Введите дату фото","Последняя дата съемки: dd.mm.yyyy");
-                const pointImgUrl = prompt("Введите путь к фото","images/.jpg");
+                const pointDate = prompt(
+                    "Введите дату фото",
+                    `Дата съемки: ${currentDate.getDate()}.${+currentDate.getMonth()+1}.${currentDate.getFullYear()}`
+                );
+                const pointImgUrl = prompt(
+                    "Введите путь к фото",
+                    `images/photo_${currentDate.getDate()}_${+currentDate.getMonth()+1}_${currentDate.getFullYear()}/`
+                );
                 if (pointName === null || pointTitle === null || pointDate === null || pointImgUrl === null) {
                     return;
                 }
@@ -90,6 +102,7 @@ function mapClickTrigger(pointsArray, planSelector, pointSelector) {
                 })
                 .then(data => data.json())
                 .then(imagesArray => {
+                    imagesArray.reverse();
                     imagesArray.push({
                         url: pointsArray[pointId-1].url,
                         description: pointsArray[pointId-1].date
