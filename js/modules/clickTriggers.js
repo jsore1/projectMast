@@ -1,5 +1,5 @@
 import {closeModal} from './modal';
-import { selectArchiveImages } from './requests';
+import { selectArchiveImages, addPoint, updatePoint } from './requests';
 
 // Функция обработки событий на плане местности
 // Принимает 3 параметра:
@@ -38,20 +38,7 @@ function mapClickTrigger(pointsArray, planSelector, pointSelector) {
                     return;
                 }
                 // Продолжить код с обновлением точки
-                let formData = new FormData();
-                formData.append("id", pointId);
-                formData.append("description", description);
-                formData.append("url", pointImgUrl);
-                fetch('update_point.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(data => data.text())
-                .then((response) => {
-                    if (response === "1") {
-                        console.log("Точка обновлена!");
-                    }
-                });
+                updatePoint(pointId, description, pointImgUrl);
             }
         } else if (isAddPoint && (event.target && event.target.tagName === "IMG")) {
             if (confirm("Добавить новую точку на план?")) {
@@ -71,31 +58,8 @@ function mapClickTrigger(pointsArray, planSelector, pointSelector) {
                     return;
                 }
 
-                let formData = new FormData();
-                formData.append("x", left);
-                formData.append("y", top);
-                formData.append("name", pointName);
-                formData.append("title", pointTitle);
-                formData.append("date", pointDate);
-                formData.append("url", pointImgUrl);
-
-                fetch("add_point.php", {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(data => data.text())
-                .then((response) => {
-                    if (response === "1") {
-                        console.log("Точка добавлена!");
-                        // Добавить data-id из add_points.php
-                        plan.insertAdjacentHTML(
-                            "beforeend",
-                            `<div class="plan__point" style="top: ${top}px;left: ${left}px" data-id="">
-                                    <span>${pointName}</span>
-                                </div>`
-                        );
-                    }
-                });
+                addPoint(left, top, pointName, pointTitle, pointDate,pointImgUrl, plan);
+                
             }
         } else {
             if (event.target && event.target.className === pointSelector) {
