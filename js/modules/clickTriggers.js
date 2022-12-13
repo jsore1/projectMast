@@ -1,6 +1,11 @@
 import {renderImageModal} from './render';
 import {closeModal} from './modal';
 
+// Функция обработки событий на плане местности
+// Принимает 3 параметра:
+// pointsArray - Массив с точками
+// planSelector - Селектор плана
+// pointSelector -  Селектор точек
 function mapClickTrigger(pointsArray, planSelector, pointSelector) {
     let isAddPoint = false;
     let isUpdatePoint = false;
@@ -107,6 +112,7 @@ function mapClickTrigger(pointsArray, planSelector, pointSelector) {
                         url: pointsArray[pointId-1].url,
                         description: pointsArray[pointId-1].date
                     });
+                    // Отрисовка модального окна с данными точки
                     renderImageModal(pointsArray, pointId, imagesArray.reverse());
                 });
             }
@@ -114,6 +120,7 @@ function mapClickTrigger(pointsArray, planSelector, pointSelector) {
     });
 }
 
+// Функция для обработки событий закрытия модального окна
 function modalCloseClickTrigger() {
     const modal = document.querySelector(".modal");
     const modalClose = document.querySelector(".modal__close");

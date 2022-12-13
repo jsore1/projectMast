@@ -2,6 +2,10 @@ import slider from './slider';
 import {createImage, clearImages} from './image';
 import {openModal} from './modal';
 
+// Функция отрисовки точек на странице
+// Принимает два параметра:
+// pointsArray - Массив с точками
+// planSelector - Селектор элемента, на котором будут отрисовываться точки
 function renderPoints(pointsArray, planSelector){
     if (pointsArray.length > 0) {
         const plan = document.querySelector(planSelector);
@@ -16,6 +20,11 @@ function renderPoints(pointsArray, planSelector){
     }
 }
 
+// Функция отрисовки модального окна с данными точки
+// Принимает 3 параметра:
+// pointsArray - Массив с точками
+// pointId - id точки
+// imagesArray - Массив с данными по конкретной точке
 function renderImageModal(pointsArray, pointId, imagesArray) {
     const modalText = document.querySelector(".modal__text"),
           modalTitle = document.querySelector(".modal__title"),

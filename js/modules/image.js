@@ -1,3 +1,4 @@
+// Функция для создания фотографии
 function createImage(src, inner) {
     return new Promise((resolve, reject) => {
         const imgDiv = document.createElement("div");
@@ -11,6 +12,7 @@ function createImage(src, inner) {
     });
 }
 
+// Функция для очистки фотографий
 function clearImages() {
     const modalImageCards = document.querySelectorAll(".modal__image-card");
     modalImageCards.forEach((card) => {

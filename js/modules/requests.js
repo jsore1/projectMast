@@ -1,17 +1,23 @@
+// Модуль со всеми запросами к серверу
+
 import { renderPoints } from "./render";
 import {mapClickTrigger} from "./clickTriggers";
 
+// Запрос на сервер для выбора точек и отрисовки их на плане
 function selectPoints() {
     fetch('select_points.php', {
         method: 'POST'
     })
     .then(data => data.json())
     .then(pointsArray => {
+        // Отрисовка точек на странице
         renderPoints(pointsArray, '.plan');
+        // Обработчик событий плана местности
         mapClickTrigger(pointsArray, '.plan', 'plan__point');
     });
 }
 
+// Запрос на сервер для отрисовки таблицы с данными по обходу
 function getTable() {
     fetch('get_table.php', {
         method: 'POST'

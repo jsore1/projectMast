@@ -1,3 +1,5 @@
+// Функция слайдер фотографий
+// Принимает параметр с массивом данных по точке
 function slider(imagesArray) {
     const width = window.getComputedStyle(document.querySelector(".modal__image-wrapper")).width,
           nextButton = document.querySelector(".modal__next"),
