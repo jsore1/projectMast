@@ -51,6 +51,7 @@ function getTable() {
     });
 }
 
+// Запрос на сервер для выборки архивный фото
 function selectArchiveImages(pointId, pointsArray) {
     let formData = new FormData();
     formData.append("id", pointId);
@@ -70,6 +71,7 @@ function selectArchiveImages(pointId, pointsArray) {
     });
 }
 
+// Запрос на сервер для добавление точки в базу данных
 function addPoint(left, top, pointName, pointTitle, pointDate,pointImgUrl, plan) {
     let formData = new FormData();
     formData.append("x", left);
@@ -98,6 +100,7 @@ function addPoint(left, top, pointName, pointTitle, pointDate,pointImgUrl, plan)
     });
 }
 
+// Запрос на сервер для обновление точки в базе данных
 function updatePoint(pointId, description, pointImgUrl) {
     let formData = new FormData();
     formData.append("id", pointId);
