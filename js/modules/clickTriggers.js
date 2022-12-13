@@ -1,5 +1,5 @@
-import {renderImageModal} from './render';
 import {closeModal} from './modal';
+import { selectArchiveImages } from './requests';
 
 // Функция обработки событий на плане местности
 // Принимает 3 параметра:
@@ -99,22 +99,7 @@ function mapClickTrigger(pointsArray, planSelector, pointSelector) {
             }
         } else {
             if (event.target && event.target.className === pointSelector) {
-                let formData = new FormData();
-                formData.append("id", pointId);
-                fetch('select_images_archive.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(data => data.json())
-                .then(imagesArray => {
-                    imagesArray.reverse();
-                    imagesArray.push({
-                        url: pointsArray[pointId-1].url,
-                        description: pointsArray[pointId-1].date
-                    });
-                    // Отрисовка модального окна с данными точки
-                    renderImageModal(pointsArray, pointId, imagesArray.reverse());
-                });
+                selectArchiveImages(pointId, pointsArray);
             }
         }
     });

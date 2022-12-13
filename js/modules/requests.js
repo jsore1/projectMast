@@ -1,6 +1,6 @@
 // Модуль со всеми запросами к серверу
 
-import { renderPoints } from "./render";
+import { renderPoints, renderImageModal } from "./render";
 import {mapClickTrigger} from "./clickTriggers";
 
 // Запрос на сервер для выбора точек и отрисовки их на плане
@@ -51,4 +51,23 @@ function getTable() {
     });
 }
 
-export {selectPoints, getTable};
+function selectArchiveImages(pointId, pointsArray) {
+    let formData = new FormData();
+    formData.append("id", pointId);
+    fetch('select_images_archive.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(data => data.json())
+    .then(imagesArray => {
+        imagesArray.reverse();
+        imagesArray.push({
+            url: pointsArray[pointId-1].url,
+            description: pointsArray[pointId-1].date
+        });
+        // Отрисовка модального окна с данными точки
+        renderImageModal(pointsArray, pointId, imagesArray.reverse());
+    });
+}
+
+export {selectPoints, getTable, selectArchiveImages};
