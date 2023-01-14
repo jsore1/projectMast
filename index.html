@@ -47,10 +47,18 @@
     </div>
     <div class="auth-window">
         <div class="auth-window__content">
-            <div class="auth-window__title"></div>
-            <input class="auth-window__login-input" type="text">
-            <input class="auth-window__password-input" type="password">
-            <button class="auth-window__button">Вход</button>
+            <div class="auth-window__title">Вход</div>
+            <input class="auth-window__input" type="text" placeholder="Введите логин">
+            <div class="auth-window__input-error hide">
+                <span class="auth-window__input-error-icon"></span>
+                <div class="auth-window__input-error-text">Ошибка</div>
+            </div>
+            <input class="auth-window__input" type="password" placeholder="Введите пароль">
+            <div class="auth-window__input-error hide">
+                <span class="auth-window__input-error-icon"></span>
+                <div class="auth-window__input-error-text">Ошибка</div>
+            </div>
+            <button class="auth-window__button">Войти</button>
         </div>
     </div>
     <script src="js/bundle.js"></script>

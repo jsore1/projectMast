@@ -1,5 +1,6 @@
 body
     background-color: #222222
+
 main 
     display: flex
     justify-content: space-around
@@ -141,11 +142,78 @@ main
         height: 512px
         background-image: url("../images/icons/spinner.svg")
 
+.auth-window
+    position: fixed
+    display: block
+    top: 0
+    left: 0
+    z-index: 1050
+    width: 100%
+    height: 100%
+    overflow: hidden
+    background-color: rgba(0, 0, 0, .5)
+    font-size: 18px
+    &__content
+        display: flex
+        width: 30vw
+        height: 30vh
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        position: relative
+        margin: 30vh auto
+        padding: 20px 20px
+        background-color: #fff
+        border: 1px solid rgba(0, 0, 0, .2)
+        border-radius: 4px
+    &__title
+        margin-bottom: 10px
+    &__input
+        padding: 0 0 0 8px
+        margin-bottom: 8px
+        width: 240px
+        height: 38px
+        background: #FFFFFF
+        border: 1px solid #C2C9D1
+        border-radius: 8px
+        font-size: 14px
+    &__input:hover
+        border: 1px solid #3E66FB
+    &__input:focus
+        border: 1px solid #3E66FB
+        outline: none
+    &__button
+        width: 100px
+        height: 40px
+        text-transform: uppercase
+    &__input-error
+        position: relative
+        margin-bottom: 8px
+    &__input-error-icon
+        position: absolute
+        left: -22px
+        display: block
+        width: 16px
+        height: 16px
+        background-image: url("../images/icons/Warning.svg")
+        background-repeat: no-repeat
+        background-size: contain
+    &__input-error-text
+        font-size: 12px
+        color: rgba(0, 0, 0, 0.5)
+        line-height: 17px
+
 .show
     display: block
 
 .hide
     display: none
+
+.filter-blur
+    filter: 10px
+
+.error-border
+    border: 1px solid #F03738
 
 @media screen and ( max-width: 1600px )
     .modal
