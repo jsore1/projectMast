@@ -8,7 +8,7 @@
     <title>Отчет обхода антенного поля</title>
 </head>
 <body>
-    <main>
+    <main class="main">
         <div class="main-table">
             <table>
                     <thead>
@@ -45,20 +45,20 @@
     <div class="loader">
         <div class="loader__spinner"></div>
     </div>
-    <div class="auth-window">
-        <div class="auth-window__content">
-            <div class="auth-window__title">Вход</div>
-            <input class="auth-window__input" type="text" placeholder="Введите логин">
-            <div class="auth-window__input-error hide">
-                <span class="auth-window__input-error-icon"></span>
-                <div class="auth-window__input-error-text">Ошибка</div>
+    <div class="modal modal_show">
+        <div class="modal__content modal__content_auth">
+            <div class="modal__title">Вход</div>
+            <input class="input input_margin_bottom" type="text" placeholder="Введите логин">
+            <div class="input-error modal__input-error input-error_hide">
+                <span class="input-error__icon"></span>
+                <div class="input-error__text">Ошибка</div>
             </div>
-            <input class="auth-window__input" type="password" placeholder="Введите пароль">
-            <div class="auth-window__input-error hide">
-                <span class="auth-window__input-error-icon"></span>
-                <div class="auth-window__input-error-text">Ошибка</div>
+            <input class="input input_margin_bottom" type="password" placeholder="Введите пароль">
+            <div class="input-error modal__input-error input-error_hide">
+                <span class="input-error__icon"></span>
+                <div class="input-error__text">Ошибка</div>
             </div>
-            <button class="auth-window__button">Войти</button>
+            <button class="button">Войти</button>
         </div>
     </div>
     <script src="js/bundle.js"></script>
