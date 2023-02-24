@@ -24,15 +24,23 @@ function mapClickTrigger(pointsArray, planSelector, pointSelector) {
         const pointId = +event.target.getAttribute("data-id");
         if (isUpdatePoint && (event.target && event.target.className === pointSelector)) {
             let currentDate = new Date();
+            let currentDay = 
+                (currentDate.getDate() > 9) ?
+                `${currentDate.getDate()}` :
+                `0${currentDate.getDate()}`;
+            let currentMonth = 
+                ((currentDate.getMonth() + 1) > 9) ?
+                `${currentDate.getMonth() + 1}` :
+                `0${currentDate.getMonth() + 1}`;
             event.preventDefault();
             if (confirm("Обновить точку?")) {
                 const description = prompt(
                     "Введите дату фото", 
-                    `Дата съемки: ${currentDate.getDate()}.${+currentDate.getMonth()+1}.${currentDate.getFullYear()}`
+                    `Дата съемки: ${currentDay}.${currentMonth}.${currentDate.getFullYear()}`
                 );
                 const pointImgUrl = prompt(
                     "Введите путь к фото", 
-                    `images/photo_${currentDate.getDate()}_${+currentDate.getMonth()+1}_${currentDate.getFullYear()}/`
+                    `images/photo_${currentDay}_${currentMonth}_${currentDate.getFullYear()}/`
                 );
                 if (description === null || pointImgUrl === null) {
                     return;
